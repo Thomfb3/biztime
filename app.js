@@ -13,6 +13,8 @@ const invoiceRoutes = require("./routes/invoices");
 app.use("/invoices", invoiceRoutes);
 
 
+const industryRoutes = require("./routes/industries");
+app.use("/industries", industryRoutes);
 /** 404 handler */
 
 app.use(function(req, res, next) {

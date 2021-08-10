@@ -44,12 +44,12 @@ router.post('/', async (req, res, next) => {
 });
 
 
-//PATCH update a invoice
-router.patch('/:id', async (req, res, next) => {
+//PUT update a invoice
+router.put('/:id', async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const {comp_code, amt, paid} = req.body;
-        const results = await db.query(`UPDATE invoices SET comp_code=$1, amt=$2, paid=$3, paid_date=${paid ? 'CURRENT_TIMESTAMP' : null} WHERE id=$4 RETURNING id, comp_code, amt, paid, add_date, paid_date`, [comp_code, amt, paid, id]);
+        const id = req.params.id;
+        const { amt, paid} = req.body;
+        const results = await db.query(`UPDATE invoices SET amt=$1, paid=$2, paid_date=${paid ? 'CURRENT_TIMESTAMP' : null} WHERE id=$3 RETURNING id, comp_code, amt, paid, add_date, paid_date`, [amt, paid, id]);
         if (results.rows.length === 0) {
             throw new ExpressError(`Can't find invoice with id of ${id}`, 404);
         }
